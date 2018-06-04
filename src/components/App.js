@@ -10,13 +10,30 @@ import SignUpPage from './pages/SignUpPage'
 import PasswordForgetPage from './pages/PasswordForgetPage'
 import HomePage from './pages/HomePage'
 import AccountPage from './pages/AccountPage'
+import { firebase } from '../firebase'
 
 class App extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      authUser: null
+    }
+  }
+
+  componentDidMount () {
+    firebase.auth.onAuthStateChanged(authUser => {
+      authUser
+        ? this.setState(() => ({ authUser }))
+        : this.setState(() => ({ authUser: null }))
+    })
+  }
+
   render () {
     return (
       <Router>
         <div>
-          <Nav />
+          <Nav authUser={this.state.authUser}/>
 
           <Route
             exact path={routes.LANDING}
