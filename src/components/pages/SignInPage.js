@@ -4,12 +4,13 @@ import { withRouter } from 'react-router-dom'
 import { SignUpLink } from './SignUpPage'
 import { auth } from '../../firebase'
 import * as routes from '../../constants/routes'
+import '../../css/signup.css'
 
 const SignInPage = ({ history }) =>
   <div>
     <h1>SignIn</h1>
     <SignInForm history={history} />
-    <SignUpLink />
+
   </div>
 
 const byPropKey = (propertyName, value) => () => ({
@@ -58,30 +59,38 @@ class SignInForm extends Component {
       error
     } = this.state
 
-    const isInvalid =
-      password === '' ||
-      email === ''
+    const isValid =
+      password !== '' &&
+      email !== ''
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          value={email}
-          onChange={event => this.setState(byPropKey('email', event.target.value))}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          value={password}
-          onChange={event => this.setState(byPropKey('password', event.target.value))}
-          type="password"
-          placeholder="Password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Sign In
-        </button>
+      <div className="container">
+        <form className="form-signin" onSubmit={this.onSubmit}>
+          <h3 className="form-signin-heading">Sign In</h3>
+          <label htmlFor="inputEmail" className="sr-only">Email address</label>
+          <input
+            id="inputEmail"
+            className="form-control"
+            value={email}
+            onChange={event => this.setState(byPropKey('email', event.target.value))}
+            type="email"
+            placeholder="Email Address"
+            required autoFocus
+          />
+          <label htmlFor="inputPassword" className="sr-only">Password</label>
+          <input
+            className="form-control"
+            value={password}
+            onChange={event => this.setState(byPropKey('password', event.target.value))}
+            type="password"
+            placeholder="Password"
+          />
 
-        { error && <p>{error.message}</p> }
-      </form>
+          <button disabled={!isValid} className="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
+          <SignUpLink className="sr-only"/>
+        </form>
+        <div className="error">{ error && <p>{error.message}</p> }</div>
+      </div>
     )
   }
 }

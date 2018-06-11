@@ -26,5 +26,5 @@ const NavigationNonAuth = () =>
   <div className="container d-flex flex-column flex-md-row justify-content-between">
     <Link className="py-2 d-none d-md-inline-block" to={routes.HOME}>Home</Link>
     <Link className="py-2 d-none d-md-inline-block" to={routes.LANDING}>Landing</Link>
-    <Link className="py-2 d-none d-md-inline-block" to={routes.SIGN_IN}>Sign In</Link>
+    <Link className="py-2 d-none d-md-inline-block btn btn-outline-primary" to={routes.SIGN_IN}>Sign In</Link>
   </div>

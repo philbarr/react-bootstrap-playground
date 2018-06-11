@@ -1,13 +1,13 @@
 import React from 'react'
-
 import { auth } from '../firebase'
+import { Link } from 'react-router-dom'
 
 const SignOutButton = () =>
-  <button
-    type="button"
-    onClick={auth.doSignOut}
+  <Link
+    className="py-2 d-none d-md-inline-block btn btn-outline-primary"
+    onClick={auth.doSignOut} to="/"
   >
     Sign Out
-  </button>
+  </Link>
 
 export default SignOutButton

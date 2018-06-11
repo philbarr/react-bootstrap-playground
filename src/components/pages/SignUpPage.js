@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import * as routes from '../../constants/routes'
 import { auth } from '../../firebase'
+import '../../css/signup.css'
 
 const SignUpPage = ({history}) =>
   <div>
@@ -65,37 +66,40 @@ class SignUpForm extends React.Component {
       username !== ''
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          value={username}
-          onChange={event => this.setState(byPropKey('username', event.target.value))}
-          type="text"
-          placeholder="Full Name"
-        />
-        <input
-          value={email}
-          onChange={event => this.setState(byPropKey('email', event.target.value))}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          value={passwordOne}
-          onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
-          type="password"
-          placeholder="Password"
-        />
-        <input
-          value={passwordTwo}
-          onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
-          type="password"
-          placeholder="Confirm Password"
-        />
-        <button disabled={!isValid} type="submit">
-          Sign Up
-        </button>
 
-        { error && <p>{error.message}</p> }
-      </form>
+      <div className="container">
+        <form className="form-signin" onSubmit={this.onSubmit}>
+          <h3 className="form-signin-heading">Create an account</h3>
+          <label htmlFor="inputEmail" className="sr-only">Email address</label>
+          <input
+            id="inputEmail"
+            className="form-control"
+            value={email}
+            onChange={event => this.setState(byPropKey('email', event.target.value))}
+            type="email"
+            placeholder="Email Address"
+            required autoFocus
+          />
+          <label htmlFor="inputPassword" className="sr-only">Password</label>
+          <input
+            className="form-control"
+            value={passwordOne}
+            onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
+            type="password"
+            placeholder="Password"
+          />
+          <label htmlFor="inputPassword" className="sr-only">Confirm Password</label>
+          <input
+            className="form-control"
+            value={passwordTwo}
+            onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
+            type="password"
+            placeholder="Confirm Password"
+          />
+          <button disabled={!isValid} className="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+        </form>
+        <div className="error">{ error && <p>{error.message}</p> }</div>
+      </div>
     )
   }
 }
