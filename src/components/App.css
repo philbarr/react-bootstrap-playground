@@ -81,3 +81,16 @@ body {
 }
 
 .overflow-hidden { overflow: hidden; }
+
+.custom-social{
+  max-width: 330px !important;
+  padding: 15px !important;
+}
+
+.custom-social a:not([href]):not([tabIndex]) {
+  color: #fff;
+}
+
+.custom-social a:not([href]):not([tabIndex]):hover {
+  color: #fff;
+}

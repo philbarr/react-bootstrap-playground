@@ -1,4 +1,7 @@
-import { auth } from './firebase'
+import { auth, provider } from './firebase'
+
+export const doSignInWithProvider = () =>
+  auth.signInWithPopup(provider)
 
 // Sign Up
 export const doCreateUserWithEmailAndPassword = (email, password) =>

@@ -30,7 +30,7 @@ class SignInForm extends Component {
     this.state = { ...INITIAL_STATE }
   }
 
-  onSubmit = (event) => {
+  onEmailSignIn = (event) => {
     const {
       email,
       password
@@ -52,6 +52,21 @@ class SignInForm extends Component {
     event.preventDefault()
   }
 
+  onSocialSignIn = (event) => {
+    const {
+      history
+    } = this.props
+
+    auth.doSignInWithProvider()
+      .then(() => {
+        this.setState(() => ({ ...INITIAL_STATE }))
+        history.push(routes.HOME)
+      })
+      .catch(error => {
+        this.setState(byPropKey('error', error))
+      })
+  }
+
   render () {
     const {
       email,
@@ -64,32 +79,38 @@ class SignInForm extends Component {
       email !== ''
 
     return (
-      <div className="container">
-        <form className="form-signin" onSubmit={this.onSubmit}>
-          <h3 className="form-signin-heading">Sign In</h3>
-          <label htmlFor="inputEmail" className="sr-only">Email address</label>
-          <input
-            id="inputEmail"
-            className="form-control"
-            value={email}
-            onChange={event => this.setState(byPropKey('email', event.target.value))}
-            type="email"
-            placeholder="Email Address"
-            required autoFocus
-          />
-          <label htmlFor="inputPassword" className="sr-only">Password</label>
-          <input
-            className="form-control"
-            value={password}
-            onChange={event => this.setState(byPropKey('password', event.target.value))}
-            type="password"
-            placeholder="Password"
-          />
+      <div>
+        <div className="container">
+          <form className="form-signin" onSubmit={this.onEmailSignIn}>
+            <h3 className="form-signin-heading">Sign In</h3>
+            <label htmlFor="inputEmail" className="sr-only">Email address</label>
+            <input
+              id="inputEmail"
+              className="form-control"
+              value={email}
+              onChange={event => this.setState(byPropKey('email', event.target.value))}
+              type="email"
+              placeholder="Email Address"
+              required autoFocus
+            />
+            <label htmlFor="inputPassword" className="sr-only">Password</label>
+            <input
+              className="form-control"
+              value={password}
+              onChange={event => this.setState(byPropKey('password', event.target.value))}
+              type="password"
+              placeholder="Password"
+            />
 
-          <button disabled={!isValid} className="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
-          <SignUpLink className="sr-only"/>
-        </form>
-        <div className="error">{ error && <p>{error.message}</p> }</div>
+            <button disabled={!isValid} className="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
+            <SignUpLink className="sr-only"/>
+
+          </form>
+          <div className="container custom-social">
+            <a className="btn btn-block btn-social btn-google" onClick={this.onSocialSignIn}><span className="fa fa-google"></span>Sign In With Google</a>
+          </div>
+          <div className="error">{ error && <p>{error.message}</p> }</div>
+        </div>
       </div>
     )
   }
